@@ -1,3 +1,31 @@
 spring:
   application:
     name: security
+  datasource:
+    url: jdbc:postgresql://${postgres_domain}:${postgres_port}/${postgres_db}
+    username: ${postgres_username}
+    password: ${postgres_password}
+    driver-class-name: org.postgresql.Driver
+    dbcp2:
+      test-while-idle: true
+      validation-query: SELECT 1
+    hikari:
+      maximum-pool-size: 5
+      connection-timeout: 30000
+      validation-timeout: 300000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  jpa:
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  servlet:
+    context-path: /api
