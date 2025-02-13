@@ -12,7 +12,6 @@ import org.hibernate.annotations.UuidGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -29,7 +28,7 @@ import static org.hibernate.annotations.UuidGenerator.Style.TIME;
 @ToString
 @Entity
 @Table(schema = "public")
-public class User implements UserDetails, Serializable {
+public class User implements UserDetails {
 
     @Id
     @UuidGenerator(style = TIME)
@@ -45,7 +44,6 @@ public class User implements UserDetails, Serializable {
     @Column(length = 100, nullable = false)
     private String password;
 
-    @Size(max = 50)
     @NotNull
     @Column(length = 50, nullable = false)
     @Enumerated(STRING)
