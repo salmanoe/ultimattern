@@ -26,6 +26,20 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  spring:
+    data:
+      redis:
+        host: ${redis_domain}
+        port: ${redis_port}
 server:
   servlet:
     context-path: /api
+application:
+  security:
+    jwt:
+      secret-key: ${jwt_secret_key}
+      expiration:
+        access: 3600000 # 1 hour
+        refresh: 28800000 # 8 hours
+  origins:
+    allow: http://localhost:4200
