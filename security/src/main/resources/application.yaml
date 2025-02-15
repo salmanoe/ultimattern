@@ -41,5 +41,8 @@ application:
       expiration:
         access: 3600000 # 1 hour
         refresh: 28800000 # 8 hours
+    redis:
+      token:
+        revoke-directory: 'revoked_token:'
   origins:
     allow: http://localhost:4200

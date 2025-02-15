@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -33,6 +34,9 @@ public class JWTService implements TokenService {
 
     @Value("${application.security.jwt.expiration.refresh}")
     private long refreshExpiration;
+
+    @Value("${application.security.redis.token.revoke-directory}")
+    private String revokedTokenDirectory;
 
     private final RedisTemplate<String, Object> redisTemplate;
 
@@ -77,12 +81,19 @@ public class JWTService implements TokenService {
 
     private boolean isTokenRevoked(String authorizationHeader) {
         String token = getToken(authorizationHeader);
-        return Boolean.parseBoolean(Objects.requireNonNullElse(
-                redisTemplate.opsForValue().get("revokedToken:" + token), false).toString());
+        return Boolean.parseBoolean(Objects
+                .requireNonNullElse(redisTemplate.opsForValue().get(getRedisKey(token)), false)
+                .toString());
     }
 
     @Override
     public void revokeToken(String token) {
-        redisTemplate.opsForValue().set("revokedToken:" + token, TRUE.toString());
+        log.info("Revoke token");
+
+        redisTemplate.opsForValue().set(getRedisKey(token), TRUE.toString(), Duration.ofHours(1));
+    }
+
+    private String getRedisKey(String token) {
+        return revokedTokenDirectory + token;
     }
 }

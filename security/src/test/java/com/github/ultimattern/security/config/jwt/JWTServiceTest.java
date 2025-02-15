@@ -36,13 +36,16 @@ class JWTServiceTest {
 
     @BeforeEach
     void setUp() {
-        User user = new User();
-        user.setUsername("test_username");
-        user.setPassword(passwordEncoder.encode("test_password"));
-        user.setRole(Role.ADMIN);
-        user.setIsActive(false);
-        user.setIsLocked(false);
-        userRepository.save(user);
+        Optional<User> testUsername = userRepository.findByUsername("test_username");
+        if (testUsername.isEmpty()) {
+            User user = new User();
+            user.setUsername("test_username");
+            user.setPassword(passwordEncoder.encode("test_password"));
+            user.setRole(Role.ADMIN);
+            user.setIsActive(false);
+            user.setIsLocked(false);
+            userRepository.save(user);
+        }
     }
 
     @Test
