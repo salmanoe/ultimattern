@@ -27,9 +27,9 @@ import java.util.List;
  * @version 0.0.1
  * @since 2/11/2025
  */
-@Configuration
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
+@Configuration
 public class ApplicationConfig {
 
     private final UserRepository userRepo;
