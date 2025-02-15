@@ -1,23 +1,21 @@
 package com.github.ultimattern.security.config.jwt;
 
 import com.auth0.jwt.JWT;
+import com.github.ultimattern.security.config.redis.RedisUtil;
 import com.github.ultimattern.security.token.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.Date;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.github.ultimattern.security.config.jwt.JWTUtil.*;
-import static java.lang.Boolean.TRUE;
 
 /**
  * @author Salman
@@ -34,11 +32,6 @@ public class JWTService implements TokenService {
 
     @Value("${application.security.jwt.expiration.refresh}")
     private long refreshExpiration;
-
-    @Value("${application.security.redis.token.revoke-directory}")
-    private String revokedTokenDirectory;
-
-    private final RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public String generateAccessToken(HttpServletRequest request, UserDetails userDetails) {
@@ -81,19 +74,13 @@ public class JWTService implements TokenService {
 
     private boolean isTokenRevoked(String authorizationHeader) {
         String token = getToken(authorizationHeader);
-        return Boolean.parseBoolean(Objects
-                .requireNonNullElse(redisTemplate.opsForValue().get(getRedisKey(token)), false)
-                .toString());
+        return RedisUtil.isRevoked(token);
     }
 
     @Override
     public void revokeToken(String token) {
         log.info("Revoke token");
 
-        redisTemplate.opsForValue().set(getRedisKey(token), TRUE.toString(), Duration.ofHours(1));
-    }
-
-    private String getRedisKey(String token) {
-        return revokedTokenDirectory + token;
+        RedisUtil.ofRevoked(token, Duration.ofHours(1));
     }
 }
