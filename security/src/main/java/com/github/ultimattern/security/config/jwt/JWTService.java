@@ -74,7 +74,7 @@ public class JWTService implements TokenService {
 
     private boolean isTokenRevoked(String authorizationHeader) {
         String token = getToken(authorizationHeader);
-        return RedisUtil.isRevoked(token);
+        return RedisUtil.isRevokedToken(token);
     }
 
     @Override

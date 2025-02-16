@@ -37,7 +37,7 @@ public class JWTLogoutHandler implements LogoutHandler {
                 username = null;
             }
             String token = authorizationHeader.substring("Bearer ".length());
-            if (!RedisUtil.isRevoked(token)) {
+            if (!RedisUtil.isRevokedToken(token)) {
                 if (username != null)
                     log.info("Logout - {}", username);
 

@@ -1,10 +1,16 @@
 package com.github.ultimattern.security.config;
 
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
  * @author Salman
@@ -22,5 +28,12 @@ public class ResponseHandler {
             map.put("response", response);
         map.put("metadata", metadata);
         return new ResponseEntity<>(map, status);
+    }
+
+    public static void ofException(HttpServletResponse response, String message, HttpStatus status) throws IOException {
+        ResponseEntity<Object> entity = generateResponse(message, status, null);
+        response.setStatus(status.value());
+        response.setContentType(APPLICATION_JSON_VALUE);
+        response.getWriter().write(Objects.requireNonNull(entity.getBody()).toString());
     }
 }
