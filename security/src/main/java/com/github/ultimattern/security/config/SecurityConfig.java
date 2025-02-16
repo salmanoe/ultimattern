@@ -40,18 +40,23 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(header -> {
                     header.xssProtection(Customizer.withDefaults());
-                    header.contentSecurityPolicy(h -> h.policyDirectives("script-src 'self'"));
+                    header.contentSecurityPolicy(h ->
+                            h.policyDirectives("script-src 'self'"));
                 })
-                .sessionManagement(management -> management.sessionCreationPolicy(STATELESS))
-                .authorizeHttpRequests(request -> request.anyRequest().authenticated())
+                .sessionManagement(management ->
+                        management.sessionCreationPolicy(STATELESS))
+                .authorizeHttpRequests(request ->
+                        request.anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(e -> e.accessDeniedHandler(accessDeniedHandler()))
+                .exceptionHandling(e ->
+                        e.accessDeniedHandler(accessDeniedHandler()))
                 .logout(logout -> {
                     logout.logoutUrl("/logout");
                     logout.addLogoutHandler(logoutHandler);
                     logout.logoutSuccessHandler(
-                            (request, response, authentication) -> SecurityContextHolder.clearContext());
+                            (request, response, authentication) ->
+                                    SecurityContextHolder.clearContext());
                 });
         return http.build();
     }

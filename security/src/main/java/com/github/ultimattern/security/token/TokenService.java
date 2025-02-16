@@ -11,7 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface TokenService {
 
     String generateAccessToken(HttpServletRequest request, UserDetails userDetails);
+
     String generateRefreshToken(HttpServletRequest request, UserDetails userDetails);
+
     boolean isTokenValid(String authorizationHeader, UserDetails userDetails);
+
     void revokeToken(String token);
 }

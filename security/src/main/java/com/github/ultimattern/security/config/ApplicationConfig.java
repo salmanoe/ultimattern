@@ -79,11 +79,15 @@ public class ApplicationConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
+        log.info("Create bean RedisConnectionFactory");
+
         return new LettuceConnectionFactory();
     }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
+        log.info("Create bean RedisTemplate");
+
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory());
         template.setKeySerializer(new StringRedisSerializer());

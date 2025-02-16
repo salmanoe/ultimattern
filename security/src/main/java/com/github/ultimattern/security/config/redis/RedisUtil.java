@@ -36,16 +36,16 @@ public class RedisUtil {
     }
 
     public static void revokeToken(String token, Duration ttl) {
-        REDIS_TEMPLATE.opsForValue().set(RedisUtil.revokedKey(token), TRUE.toString(), ttl);
+        REDIS_TEMPLATE.opsForValue().set(RedisUtil.revokedTokenKey(token), TRUE.toString(), ttl);
     }
 
-    public static boolean isRevoked(String token) {
+    public static boolean isRevokedToken(String token) {
         return Boolean.parseBoolean(Objects
-                .requireNonNullElse(REDIS_TEMPLATE.opsForValue().get(RedisUtil.revokedKey(token)), false)
+                .requireNonNullElse(REDIS_TEMPLATE.opsForValue().get(RedisUtil.revokedTokenKey(token)), false)
                 .toString());
     }
 
-    private static String revokedKey(String token) {
+    private static String revokedTokenKey(String token) {
         return REVOKED_TOKEN_DIR + token;
     }
 }
