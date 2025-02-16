@@ -35,17 +35,17 @@ public class RedisUtil {
         RedisUtil.REDIS_TEMPLATE = redisTemplate;
     }
 
-    private static String ofStatusRevoked(String token) {
-        return REVOKED_TOKEN_DIR + token;
+    public static void revokeToken(String token, Duration ttl) {
+        REDIS_TEMPLATE.opsForValue().set(RedisUtil.revokedKey(token), TRUE.toString(), ttl);
     }
 
-    public static void ofRevoked(String token, Duration ttl) {
-        REDIS_TEMPLATE.opsForValue().set(RedisUtil.ofStatusRevoked(token), TRUE.toString(), ttl);
-    }
-
-    public static Boolean isRevoked(String token) {
+    public static boolean isRevoked(String token) {
         return Boolean.parseBoolean(Objects
-                .requireNonNullElse(REDIS_TEMPLATE.opsForValue().get(RedisUtil.ofStatusRevoked(token)), false)
+                .requireNonNullElse(REDIS_TEMPLATE.opsForValue().get(RedisUtil.revokedKey(token)), false)
                 .toString());
+    }
+
+    private static String revokedKey(String token) {
+        return REVOKED_TOKEN_DIR + token;
     }
 }

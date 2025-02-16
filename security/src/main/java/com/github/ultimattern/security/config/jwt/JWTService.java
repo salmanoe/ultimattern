@@ -81,6 +81,6 @@ public class JWTService implements TokenService {
     public void revokeToken(String token) {
         log.info("Revoke token");
 
-        RedisUtil.ofRevoked(token, Duration.ofHours(1));
+        RedisUtil.revokeToken(token, Duration.ofHours(1));
     }
 }
