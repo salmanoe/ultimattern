@@ -1,0 +1,114 @@
+spring:
+  profiles:
+    active: @activatedProperties@
+  application:
+    name: security
+  datasource:
+    url: jdbc:postgresql://${postgres_domain}:${postgres_port}/${postgres_db}
+    username: ${postgres_username}
+    password: ${postgres_password}
+    driver-class-name: org.postgresql.Driver
+    dbcp2:
+      test-while-idle: true
+      validation-query: SELECT 1
+  jpa:
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+  data:
+    redis:
+      host: ${redis_domain}
+      port: ${redis_port}
+server:
+  servlet:
+    context-path: /api
+application:
+  security:
+    jwt:
+      secret-key: ${jwt_secret_key}
+    redis:
+      token:
+        revoke-directory: 'revoked_token:'
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    hikari:
+      maximum-pool-size: 5
+      connection-timeout: 30000
+      validation-timeout: 300000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+application:
+  security:
+    jwt:
+      expiration:
+        access: 3600000 # 1 hour
+        refresh: 28800000 # 8 hours
+  origins:
+    allow: http://localhost:4200
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    hikari:
+      maximum-pool-size: 5
+      connection-timeout: 30000
+      validation-timeout: 300000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+application:
+  security:
+    jwt:
+      expiration:
+        access: 3600000 # 1 hour
+        refresh: 28800000 # 8 hours
+  origins:
+    allow: http://localhost:4200
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    hikari:
+      maximum-pool-size: 150
+      connection-timeout: 60000
+      validation-timeout: 600000
+      idle-timeout: 1200000
+      max-lifetime: 3600000
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+application:
+  security:
+    jwt:
+      expiration:
+        access: 86400000 # a day
+        refresh: 604800000 # 7 days
+  origins:
+    allow: http://localhost:4200
