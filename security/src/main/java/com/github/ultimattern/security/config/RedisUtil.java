@@ -1,4 +1,4 @@
-package com.github.ultimattern.security.config.redis;
+package com.github.ultimattern.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

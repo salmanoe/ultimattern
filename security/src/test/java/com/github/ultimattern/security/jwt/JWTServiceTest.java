@@ -1,4 +1,4 @@
-package com.github.ultimattern.security.config.jwt;
+package com.github.ultimattern.security.jwt;
 
 import com.github.ultimattern.security.role.Role;
 import com.github.ultimattern.security.user.User;

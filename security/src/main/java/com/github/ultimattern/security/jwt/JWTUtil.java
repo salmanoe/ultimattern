@@ -1,4 +1,4 @@
-package com.github.ultimattern.security.config.jwt;
+package com.github.ultimattern.security.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

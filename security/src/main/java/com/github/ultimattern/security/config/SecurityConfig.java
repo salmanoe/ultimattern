@@ -1,6 +1,6 @@
 package com.github.ultimattern.security.config;
 
-import com.github.ultimattern.security.config.jwt.JWTAuthenticationFilter;
+import com.github.ultimattern.security.jwt.JWTAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

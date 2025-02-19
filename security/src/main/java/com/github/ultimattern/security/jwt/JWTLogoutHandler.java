@@ -1,7 +1,7 @@
-package com.github.ultimattern.security.config.jwt;
+package com.github.ultimattern.security.jwt;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.github.ultimattern.security.config.redis.RedisUtil;
+import com.github.ultimattern.security.config.RedisUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 
-import static com.github.ultimattern.security.config.jwt.JWTUtil.getDecodedJWT;
+import static com.github.ultimattern.security.jwt.JWTUtil.getDecodedJWT;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**

@@ -1,7 +1,7 @@
-package com.github.ultimattern.security.config.jwt;
+package com.github.ultimattern.security.jwt;
 
 import com.auth0.jwt.JWT;
-import com.github.ultimattern.security.config.redis.RedisUtil;
+import com.github.ultimattern.security.config.RedisUtil;
 import com.github.ultimattern.security.token.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import static com.github.ultimattern.security.config.jwt.JWTUtil.*;
+import static com.github.ultimattern.security.jwt.JWTUtil.*;
 
 /**
  * @author Salman

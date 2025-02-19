@@ -1,4 +1,4 @@
-package com.github.ultimattern.security.config.jwt;
+package com.github.ultimattern.security.jwt;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -21,7 +21,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 import static com.github.ultimattern.security.config.CommonMessage.TOKEN_EXPIRED;
-import static com.github.ultimattern.security.config.jwt.JWTUtil.getDecodedJWT;
+import static com.github.ultimattern.security.jwt.JWTUtil.getDecodedJWT;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
