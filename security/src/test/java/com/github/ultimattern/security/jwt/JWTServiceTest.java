@@ -18,8 +18,8 @@ import java.util.Optional;
  * @author Salman
  * @since 2/13/2025
  */
-@SpringBootTest
 @TestPropertySource(locations = "file:./.env")
+@SpringBootTest
 class JWTServiceTest {
 
     @Autowired

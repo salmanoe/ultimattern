@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Salman
  * @since 2/11/2025
  */
-@SpringBootTest
 @TestPropertySource(locations = "file:./.env")
+@SpringBootTest
 class UserTest {
 
     @Autowired
