@@ -19,7 +19,9 @@ import static com.github.ultimattern.security.role.Permission.*;
 @RequiredArgsConstructor
 public enum Role {
 
-    ADMIN(Set.of(ADMIN_CREATE, ADMIN_READ, ADMIN_UPDATE, ADMIN_DELETE));
+    ADMIN("Admin", Set.of(ADMIN_CREATE, ADMIN_READ, ADMIN_UPDATE, ADMIN_DELETE));
+
+    private final String label;
 
     private final Set<Permission> permissions;
 
